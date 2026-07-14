@@ -12,6 +12,17 @@ private:
     string password;
 
 public:
+    User::User()
+    {
+    username = "";
+    password = "";
+    }
+    User::User(string username, string password)
+    {
+    this->username = username;
+    this->password = password;
+    }
+
     void registerUser();
     bool login();
     void changePassword();
