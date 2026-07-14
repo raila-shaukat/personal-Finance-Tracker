@@ -3,29 +3,21 @@
 
 #include <string>
 
-using namespace std;
-
 class User
 {
 private:
-    string username;
-    string password;
+    std::string username;
+    std::string password;
 
 public:
-    User::User()
-    {
-    username = "";
-    password = "";
-    }
-    User::User(string username, string password)
-    {
-    this->username = username;
-    this->password = password;
-    }
+    User();
+    User(const std::string& username, const std::string& password);
 
-    void registerUser();
-    bool login();
-    void changePassword();
+    void setUsername(const std::string& username);
+    void setPassword(const std::string& password);
+
+    std::string getUsername() const;
+    std::string getPassword() const;
 };
 
 #endif

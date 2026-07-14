@@ -1,13 +1,14 @@
 #include <iostream>
+#include "../include/User.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "=====================================\n";
-    cout << " Personal Finance Tracker v1.0\n";
-    cout << " Developed by Raila Shaukat\n";
-    cout << "=====================================\n";
+    User user("Raila", "123456");
+
+    cout << "Username: " << user.getUsername() << endl;
+    cout << "Password: " << user.getPassword() << endl;
 
     return 0;
 }
