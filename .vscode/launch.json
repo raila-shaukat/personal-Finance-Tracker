@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/PMYLS/Desktop/personal-Finance-Tracker/src",
-      "program": "c:/Users/PMYLS/Desktop/personal-Finance-Tracker/src/build/Debug/outDebug",
+      "cwd": "c:/Users/PMYLS/Desktop/personal-Finance-Tracker/include",
+      "program": "c:/Users/PMYLS/Desktop/personal-Finance-Tracker/include/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
