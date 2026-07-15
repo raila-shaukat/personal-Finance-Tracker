@@ -4,16 +4,21 @@
 #include <vector>
 #include "User.h"
 
-using namespace std;
-
 class UserManager
 {
 private:
-    vector<User> users;
+    std::vector<User> users;
 
 public:
+    UserManager();
+
     void registerUser();
     bool loginUser();
+
+    bool usernameExists(const std::string& username);
+
+    void saveUsers();
+    void loadUsers();
 };
 
 #endif
