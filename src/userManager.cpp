@@ -64,11 +64,15 @@ bool UserManager::loginUser()
     for (const auto& user : users)
     {
         if (user.getUsername() == username &&
-            user.getPassword() == password)
-        {
-            cout << "Login Successful!\n";
-            return true;
-        }
+    user.getPassword() == password)
+    {
+    cout << "\n=====================================\n";
+    cout << "Welcome, " << username << "!\n";
+    cout << "Login Successful.\n";
+    cout << "=====================================\n";
+
+    return true;
+    }
     }
 
     cout << "Invalid Username or Password!\n";
