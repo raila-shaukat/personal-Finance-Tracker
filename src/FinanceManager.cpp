@@ -1,12 +1,21 @@
 #include "../include/FinanceManager.h"
+
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
-FinanceManager::FinanceManager()
+// Constructor
+FinanceManager::FinanceManager(const string& username)
 {
+    currentUser = username;
     nextTransactionId = 1;
+
+    loadTransactions();
 }
+
+// -------------------- Add Income --------------------
 
 void FinanceManager::addIncome()
 {
@@ -14,10 +23,12 @@ void FinanceManager::addIncome()
     double amount;
     string category;
     string date;
+
     cout << "\n========== Add Income ==========\n";
 
-    cout << "Title: ";
     cin.ignore();
+
+    cout << "Title: ";
     getline(cin, title);
 
     cout << "Amount: ";
@@ -42,8 +53,12 @@ void FinanceManager::addIncome()
 
     transactions.push_back(income);
 
+    saveTransactions();
+
     cout << "\nIncome Added Successfully!\n";
 }
+
+// -------------------- Add Expense --------------------
 
 void FinanceManager::addExpense()
 {
@@ -54,8 +69,9 @@ void FinanceManager::addExpense()
 
     cout << "\n========== Add Expense ==========\n";
 
-    cout << "Title: ";
     cin.ignore();
+
+    cout << "Title: ";
     getline(cin, title);
 
     cout << "Amount: ";
@@ -80,8 +96,12 @@ void FinanceManager::addExpense()
 
     transactions.push_back(expense);
 
+    saveTransactions();
+
     cout << "\nExpense Added Successfully!\n";
 }
+
+// -------------------- View Transactions --------------------
 
 void FinanceManager::viewTransactions()
 {
@@ -101,9 +121,11 @@ void FinanceManager::viewTransactions()
         cout << "Category: " << transaction.getCategory() << endl;
         cout << "Date: " << transaction.getDate() << endl;
         cout << "Type: " << transaction.getType() << endl;
-        cout << "----------------------------------\n";
+        cout << "---------------------------------------\n";
     }
 }
+
+// -------------------- Show Balance --------------------
 
 void FinanceManager::showBalance()
 {
@@ -112,15 +134,87 @@ void FinanceManager::showBalance()
     for (const auto& transaction : transactions)
     {
         if (transaction.getType() == "Income")
-        {
             balance += transaction.getAmount();
-        }
         else
-        {
             balance -= transaction.getAmount();
-        }
     }
 
     cout << "\n========== Current Balance ==========\n";
-    cout << "Balance: PKR " << balance << endl;
+    cout << "Current User : " << currentUser << endl;
+    cout << "Balance      : PKR " << balance << endl;
+}
+
+// -------------------- Save Transactions --------------------
+
+void FinanceManager::saveTransactions()
+{
+    string filename = "data/" + currentUser + ".txt";
+
+    ofstream file(filename);
+
+    if (!file.is_open())
+        return;
+
+    for (const auto& transaction : transactions)
+    {
+        file
+            << transaction.getId() << ","
+            << transaction.getTitle() << ","
+            << transaction.getAmount() << ","
+            << transaction.getCategory() << ","
+            << transaction.getDate() << ","
+            << transaction.getType()
+            << endl;
+    }
+
+    file.close();
+}
+
+// -------------------- Load Transactions --------------------
+
+void FinanceManager::loadTransactions()
+{
+    string filename = "data/" + currentUser + ".txt";
+
+    ifstream file(filename);
+
+    if (!file.is_open())
+        return;
+
+    string line;
+
+    while (getline(file, line))
+    {
+        stringstream ss(line);
+
+        string id;
+        string title;
+        string amount;
+        string category;
+        string date;
+        string type;
+
+        getline(ss, id, ',');
+        getline(ss, title, ',');
+        getline(ss, amount, ',');
+        getline(ss, category, ',');
+        getline(ss, date, ',');
+        getline(ss, type);
+
+        Transaction transaction(
+            stoi(id),
+            title,
+            stod(amount),
+            category,
+            date,
+            type
+        );
+
+        transactions.push_back(transaction);
+
+        if (stoi(id) >= nextTransactionId)
+            nextTransactionId = stoi(id) + 1;
+    }
+
+    file.close();
 }

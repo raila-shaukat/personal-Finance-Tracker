@@ -13,7 +13,7 @@ public:
     UserManager();
 
     void registerUser();
-    bool loginUser();
+    std::string loginUser();
 
     bool usernameExists(const std::string& username);
 
