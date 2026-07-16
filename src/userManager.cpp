@@ -48,7 +48,7 @@ void UserManager::registerUser()
     cout << "Registration Successful!\n";
 }
 
-string UserManager::loginUser()
+std::string UserManager::loginUser()
 {
     string username;
     string password;

@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "../include/UserManager.h"
 #include "../include/FinanceManager.h"
 
@@ -7,7 +8,6 @@ using namespace std;
 int main()
 {
     UserManager userManager;
-    FinanceManager financeManager;
 
     int choice;
 
@@ -18,6 +18,7 @@ int main()
         cout << "2. Login\n";
         cout << "3. Exit\n";
         cout << "Enter Choice: ";
+
         cin >> choice;
 
         switch (choice)
@@ -28,19 +29,27 @@ int main()
 
         case 2:
         {
-            if (userManager.loginUser())
+            string loggedInUser = userManager.loginUser();
+
+            if (loggedInUser != "")
             {
+                FinanceManager financeManager(loggedInUser);
+
                 int financeChoice;
 
                 do
                 {
                     cout << "\n========== Finance Menu ==========\n";
+                    cout << "Logged in as: " << loggedInUser << endl;
                     cout << "1. Add Income\n";
                     cout << "2. Add Expense\n";
                     cout << "3. View Transactions\n";
-                    cout << "4. Show Balance\n";
-                    cout << "5. Logout\n";
+                    cout << "4. Edit Transactions\n";
+                    cout << "5. Delete Transactions\n";
+                    cout << "6. Show Balance\n";
+                    cout << "7. Logout\n";
                     cout << "Enter Choice: ";
+
                     cin >> financeChoice;
 
                     switch (financeChoice)
@@ -56,31 +65,36 @@ int main()
                     case 3:
                         financeManager.viewTransactions();
                         break;
-
                     case 4:
+                        financeManager.editTransaction();
+                        break;
+                    case 5:
+                        financeManager.deleteTransaction();
+                        break;
+                    case 6:
                         financeManager.showBalance();
                         break;
 
-                    case 5:
-                        cout << "Logged Out Successfully!\n";
+                    case 7:
+                        cout << "\nLogged Out Successfully!\n";
                         break;
 
                     default:
-                        cout << "Invalid Choice!\n";
+                        cout << "\nInvalid Choice!\n";
                     }
 
-                } while (financeChoice != 5);
+                } while (financeChoice != 7);
             }
 
             break;
         }
 
         case 3:
-            cout << "Thank you for using Personal Finance Tracker!\n";
+            cout << "\nThank you for using Personal Finance Tracker!\n";
             break;
 
         default:
-            cout << "Invalid Choice!\n";
+            cout << "\nInvalid Choice!\n";
         }
 
     } while (choice != 3);

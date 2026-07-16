@@ -21,6 +21,8 @@ public:
     void addIncome();
     void addExpense();
     void viewTransactions();
+    void editTransaction();
+    void deleteTransaction();
     void showBalance();
 
     // File Handling

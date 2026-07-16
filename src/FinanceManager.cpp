@@ -125,6 +125,97 @@ void FinanceManager::viewTransactions()
     }
 }
 
+void FinanceManager::editTransaction()
+{
+    if (transactions.empty())
+    {
+        cout << "\nNo Transactions Found!\n";
+        return;
+    }
+
+    int id;
+
+    cout << "\nEnter Transaction ID to Edit: ";
+    cin >> id;
+
+    for (auto &transaction : transactions)
+    {
+        if (transaction.getId() == id)
+        {
+            string title;
+            double amount;
+            string category;
+            string date;
+            string type;
+
+            cin.ignore();
+
+            cout << "\n===== Edit Transaction =====\n";
+
+            cout << "New Title: ";
+            getline(cin, title);
+
+            cout << "New Amount: ";
+            cin >> amount;
+
+            cin.ignore();
+
+            cout << "New Category: ";
+            getline(cin, category);
+
+            cout << "New Date (DD-MM-YYYY): ";
+            getline(cin, date);
+
+            cout << "Type (Income/Expense): ";
+            getline(cin, type);
+
+            transaction.setTitle(title);
+            transaction.setAmount(amount);
+            transaction.setCategory(category);
+            transaction.setDate(date);
+            transaction.setType(type);
+
+            saveTransactions();
+
+            cout << "\nTransaction Updated Successfully!\n";
+
+            return;
+        }
+    }
+
+    cout << "\nTransaction Not Found!\n";
+}
+
+void FinanceManager::deleteTransaction()
+{
+    if (transactions.empty())
+    {
+        cout << "\nNo Transactions Found!\n";
+        return;
+    }
+
+    int id;
+
+    cout << "\nEnter Transaction ID to Delete: ";
+    cin >> id;
+
+    for (auto it = transactions.begin(); it != transactions.end(); it++)
+    {
+        if (it->getId() == id)
+        {
+            transactions.erase(it);
+
+            saveTransactions();
+
+            cout << "\nTransaction Deleted Successfully!\n";
+
+            return;
+        }
+    }
+
+    cout << "\nTransaction Not Found!\n";
+}
+
 // -------------------- Show Balance --------------------
 
 void FinanceManager::showBalance()
