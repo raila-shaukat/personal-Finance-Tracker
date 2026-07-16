@@ -28,11 +28,41 @@ void FinanceManager::addIncome()
 
     cin.ignore();
 
+    do
+    {
     cout << "Title: ";
     getline(cin, title);
 
+    if (title.empty())
+    {
+        cout << "Title cannot be empty.\n";
+    }
+
+    } while (title.empty());
+
+    while (true)
+    {
     cout << "Amount: ";
+
     cin >> amount;
+
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(10000, '\n');
+
+        cout << "Invalid input! Please enter a numeric amount.\n";
+        continue;
+    }
+
+    if (amount <= 0)
+    {
+        cout << "Amount must be greater than zero.\n";
+        continue;
+    }
+
+    break;
+    }
 
     cin.ignore();
 
@@ -71,11 +101,41 @@ void FinanceManager::addExpense()
 
     cin.ignore();
 
+    do
+    {
     cout << "Title: ";
     getline(cin, title);
 
+    if (title.empty())
+    {
+        cout << "Title cannot be empty.\n";
+    }
+
+    } while (title.empty());
+
+    while (true)
+    {
     cout << "Amount: ";
+
     cin >> amount;
+
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(10000, '\n');
+
+        cout << "Invalid input! Please enter a numeric amount.\n";
+        continue;
+    }
+
+    if (amount <= 0)
+    {
+        cout << "Amount must be greater than zero.\n";
+        continue;
+    }
+
+    break;
+    }
 
     cin.ignore();
 
