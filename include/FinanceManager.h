@@ -24,7 +24,7 @@ public:
     void editTransaction();
     void deleteTransaction();
     void showBalance();
-
+    std::string selectCategory();
     // File Handling
     void saveTransactions();
     void loadTransactions();
