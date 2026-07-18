@@ -1,6 +1,7 @@
 #include "../include/FinanceManager.h"
 #include "../include/InputValidator.h"
 #include "../include/CategoryManager.h"
+#include "../include/FileManager.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -362,8 +363,17 @@ void FinanceManager::loadTransactions()
 
         transactions.push_back(transaction);
 
-        if (stoi(id) >= nextTransactionId)
-            nextTransactionId = stoi(id) + 1;
+        transactions = FileManager::loadTransactions(currentUser);
+
+    nextTransactionId = 1;
+
+for (const auto& transaction : transactions)
+{
+    if (transaction.getId() >= nextTransactionId)
+    {
+        nextTransactionId = transaction.getId() + 1;
+    }
+}
     }
 
     file.close();
