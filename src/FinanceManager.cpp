@@ -1,5 +1,5 @@
 #include "../include/FinanceManager.h"
-
+#include "../include/InputValidator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -19,8 +19,8 @@ FinanceManager::FinanceManager(const string& username)
 
 void FinanceManager::addIncome()
 {
-    string title;
-    double amount;
+    string title = InputValidator::getValidTitle();
+    double amount = InputValidator::getPositiveAmount();
     string category;
     string date;
 
