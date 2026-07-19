@@ -1,9 +1,58 @@
+#include "../external/json/single_include/nlohmann/json.hpp"
 #include "../include/FileManager.h"
 
 #include <fstream>
 #include <sstream>
 
 using namespace std;
+using json = nlohmann::json;
+void FileManager::saveUsers(const vector<User>& users)
+{
+    json j = json::array();
+
+    for (const auto& user : users)
+    {
+        j.push_back(
+        {
+            {"username", user.getUsername()},
+            {"password", user.getPassword()}
+        });
+    }
+
+    ofstream file("data/users.json");
+
+    if(file.is_open())
+        file << j.dump(4);
+
+    file.close();
+}
+
+vector<User> FileManager::loadUsers()
+{
+    vector<User> users;
+
+    ifstream file("data/users.json");
+
+    if(!file.is_open())
+        return users;
+
+    json j;
+    file >> j;
+
+    for(const auto& item : j)
+    {
+        users.push_back(
+            User(
+                item["username"],
+                item["password"]
+            )
+        );
+    }
+
+    file.close();
+
+    return users;
+}
 
 // Save all transactions of a user
 void FileManager::saveTransactions(

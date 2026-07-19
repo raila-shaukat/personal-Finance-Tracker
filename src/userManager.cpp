@@ -2,11 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "../include/FileManager.h"
 using namespace std;
 
 UserManager::UserManager()
 {
-    loadUsers();
+    users = FileManager::loadUsers();
 }
 
 bool UserManager::usernameExists(const string& username)
@@ -44,7 +45,7 @@ void UserManager::registerUser()
     User newUser(username, password);
 
     users.push_back(newUser);
-    saveUsers();
+    FileManager::saveUsers(users);
     cout << "Registration Successful!\n";
 }
 
@@ -77,50 +78,4 @@ std::string UserManager::loginUser()
 
     cout << "Invalid Username or Password!\n";
     return "";
-}
-void UserManager::saveUsers()
-{
-    ofstream file("data/users.txt");
-
-    if (!file.is_open())
-    {
-        cout << "Error opening users file!\n";
-        return;
-    }
-
-    for (const auto& user : users)
-    {
-        file << user.getUsername()
-             << ","
-             << user.getPassword()
-             << endl;
-    }
-
-    file.close();
-}
-void UserManager::loadUsers()
-{
-    ifstream file("data/users.txt");
-
-    if (!file.is_open())
-    {
-        return;
-    }
-
-    string line;
-
-    while (getline(file, line))
-    {
-        stringstream ss(line);
-
-        string username;
-        string password;
-
-        getline(ss, username, ',');
-        getline(ss, password);
-
-        users.push_back(User(username, password));
-    }
-
-    file.close();
 }

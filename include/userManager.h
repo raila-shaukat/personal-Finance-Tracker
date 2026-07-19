@@ -17,8 +17,6 @@ public:
 
     bool usernameExists(const std::string& username);
 
-    void saveUsers();
-    void loadUsers();
 };
 
 #endif

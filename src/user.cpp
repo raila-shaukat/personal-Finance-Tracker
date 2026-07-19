@@ -20,7 +20,7 @@ void User::setUsername(const std::string& username)
 void User::setPassword(const std::string& password)
 {
     this->password = password;
-}
+} 
 
 std::string User::getUsername() const
 {

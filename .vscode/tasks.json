@@ -2,9 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Personal Finance Tracker",
+            "label": "Build Finance Tracker",
             "type": "shell",
-            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
                 "-std=c++17",
 
@@ -16,12 +16,17 @@
                 "src/FileManager.cpp",
                 "src/InputValidator.cpp",
                 "src/CategoryManager.cpp",
+                "src/Budget.cpp",
+                "src/Report.cpp",
 
                 "-Iinclude",
 
                 "-o",
-                "build/FinanceTracker.exe"
+                "FinanceTracker.exe"
             ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
