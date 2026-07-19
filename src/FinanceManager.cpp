@@ -9,10 +9,12 @@
 using namespace std;
 
 // Constructor
-FinanceManager::FinanceManager(const string& username)
+FinanceManager::FinanceManager(const std::string& username)
 {
     currentUser = username;
+
     nextTransactionId = 1;
+    nextBudgetId = 1;
 
     loadTransactions();
 }
@@ -295,6 +297,139 @@ void FinanceManager::showBalance()
     cout << "Balance      : PKR " << balance << endl;
 }
 
+void FinanceManager::addBudget()
+{
+    std::string category;
+    double limit;
+
+    cout << "\n========== Add Budget ==========\n";
+
+    cin.ignore();
+
+    cout << "Category: ";
+    getline(cin, category);
+
+    cout << "Monthly Budget: ";
+    cin >> limit;
+
+    Budget budget(
+        nextBudgetId++,
+        category,
+        limit
+    );
+
+    budgets.push_back(budget);
+
+    cout << "\nBudget Added Successfully!\n";
+}
+
+void FinanceManager::viewBudgets()
+{
+    if (budgets.empty())
+    {
+        cout << "\nNo Budgets Found!\n";
+        return;
+    }
+
+    cout << "\n========== Budgets ==========\n";
+
+    for (const auto& budget : budgets)
+    {
+        cout << "ID: " << budget.getId() << endl;
+        cout << "Category: " << budget.getCategory() << endl;
+        cout << "Limit: PKR " << budget.getLimitAmount() << endl;
+        cout << "----------------------------\n";
+    }
+}
+
+void FinanceManager::editBudget()
+{
+    int id;
+
+    cout << "\nEnter Budget ID: ";
+    cin >> id;
+
+    for (auto& budget : budgets)
+    {
+        if (budget.getId() == id)
+        {
+            string category;
+            double amount;
+
+            cin.ignore();
+
+            cout << "New Category: ";
+            getline(cin, category);
+
+            cout << "New Limit: ";
+            cin >> amount;
+
+            budget.setCategory(category);
+            budget.setLimitAmount(amount);
+
+            cout << "\nBudget Updated Successfully!\n";
+            return;
+        }
+    }
+
+    cout << "\nBudget Not Found!\n";
+}
+
+void FinanceManager::deleteBudget()
+{
+    int id;
+
+    cout << "\nEnter Budget ID: ";
+    cin >> id;
+
+    for (auto it = budgets.begin(); it != budgets.end(); ++it)
+    {
+        if (it->getId() == id)
+        {
+            budgets.erase(it);
+
+            cout << "\nBudget Deleted Successfully!\n";
+            return;
+        }
+    }
+
+    cout << "\nBudget Not Found!\n";
+}
+
+void FinanceManager::checkBudgetStatus()
+{
+    cout << "\n========== Budget Status ==========\n";
+
+    for (const auto& budget : budgets)
+    {
+        double spent = 0;
+
+        for (const auto& transaction : transactions)
+        {
+            if (transaction.getType() == "Expense" &&
+                transaction.getCategory() == budget.getCategory())
+            {
+                spent += transaction.getAmount();
+            }
+        }
+
+        cout << "\nCategory : " << budget.getCategory() << endl;
+        cout << "Budget   : PKR " << budget.getLimitAmount() << endl;
+        cout << "Spent    : PKR " << spent << endl;
+
+        if (spent > budget.getLimitAmount())
+        {
+            cout << "⚠ WARNING: Budget Exceeded!\n";
+        }
+        else
+        {
+            cout << "Remaining: PKR "
+                 << budget.getLimitAmount() - spent
+                 << endl;
+        }
+    }
+}
+
 // -------------------- Save Transactions --------------------
 
 void FinanceManager::saveTransactions()
@@ -362,18 +497,6 @@ void FinanceManager::loadTransactions()
         );
 
         transactions.push_back(transaction);
-
-        transactions = FileManager::loadTransactions(currentUser);
-
-    nextTransactionId = 1;
-
-for (const auto& transaction : transactions)
-{
-    if (transaction.getId() >= nextTransactionId)
-    {
-        nextTransactionId = transaction.getId() + 1;
-    }
-}
     }
 
     file.close();
