@@ -41,20 +41,30 @@ int main()
                 {
                     cout << "\n========== Finance Menu ==========\n";
                     cout << "Logged in as: " << loggedInUser << endl;
+
+                    cout << "\n------ Transactions ------\n";
                     cout << "1. Add Income\n";
                     cout << "2. Add Expense\n";
                     cout << "3. View Transactions\n";
                     cout << "4. Edit Transaction\n";
                     cout << "5. Delete Transaction\n";
                     cout << "6. Show Balance\n";
+
+                    cout << "\n------ Budget ------\n";
                     cout << "7. Add Budget\n";
                     cout << "8. View Budgets\n";
                     cout << "9. Edit Budget\n";
                     cout << "10. Delete Budget\n";
                     cout << "11. Budget Status\n";
-                    cout << "12. Logout\n";
-                    cout << "Enter Choice: ";
 
+                    cout << "\n------ Reports ------\n";
+                    cout << "12. Financial Summary\n";
+                    cout << "13. Monthly Report\n";
+                    cout << "14. Category Expense Report\n";
+
+                    cout << "\n15. Logout\n";
+
+                    cout << "\nEnter Choice: ";
                     cin >> financeChoice;
 
                     switch (financeChoice)
@@ -102,16 +112,26 @@ int main()
                     case 11:
                         financeManager.checkBudgetStatus();
                         break;
-                    
                     case 12:
+                        financeManager.showFinancialSummary();
+                        break;
+
+                    case 13:
+                        financeManager.showMonthlyReport();
+                        break;
+
+                    case 14:
+                        financeManager.showCategoryReport();
+                        break;
+
+                    case 15:
                         cout << "\nLogged Out Successfully!\n";
                         break;
-                    
                     default:
                         cout << "\nInvalid Choice!\n";
                     }
 
-                } while (financeChoice != 12);
+                } while (financeChoice != 15);
             }
 
             break;
