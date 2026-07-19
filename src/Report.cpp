@@ -91,10 +91,30 @@ void Report::showMonthlyReport(const vector<Transaction>& transactions)
     }
 }
 
-void Report::showCategoryReport(
-    const vector<Transaction>& transactions)
+void Report::showCategoryReport(const vector<Transaction>& transactions)
 {
-    cout << "\n========== Category Report ==========\n";
+    map<string, double> categoryExpenses;
 
-    cout << "Feature will be completed in Step 4.\n";
+    for (const auto& transaction : transactions)
+    {
+        if (transaction.getType() == "Expense")
+        {
+            categoryExpenses[transaction.getCategory()] += transaction.getAmount();
+        }
+    }
+
+    if (categoryExpenses.empty())
+    {
+        cout << "\nNo Expense Transactions Found!\n";
+        return;
+    }
+
+    cout << "\n========== Category Expense Report ==========\n";
+
+    cout << fixed << setprecision(2);
+
+    for (const auto& category : categoryExpenses)
+    {
+        cout << category.first << " : PKR " << category.second << endl;
+    }
 }
