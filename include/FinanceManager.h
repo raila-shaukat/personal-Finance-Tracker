@@ -6,6 +6,7 @@
 
 #include "Transaction.h"
 #include "Budget.h"
+#include "Report.h"
 
 class FinanceManager
 {
@@ -35,6 +36,11 @@ public:
     void editBudget();
     void deleteBudget();
     void checkBudgetStatus();
+
+    // Reports
+    void showFinancialSummary();
+    void showMonthlyReport();
+    void showCategoryReport();
 
     // File Handling
     void saveTransactions();

@@ -501,3 +501,18 @@ void FinanceManager::loadTransactions()
 
     file.close();
 }
+
+void FinanceManager::showFinancialSummary()
+{
+    Report::showFinancialSummary(transactions);
+}
+
+void FinanceManager::showMonthlyReport()
+{
+    Report::showMonthlyReport(transactions);
+}
+
+void FinanceManager::showCategoryReport()
+{
+    Report::showCategoryReport(transactions);
+}
