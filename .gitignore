@@ -1,0 +1,18 @@
+# Build files
+*.exe
+*.o
+*.obj
+
+# Logs
+*.txt
+
+# Build folders
+build/
+src/build/
+
+# VS Code
+.vscode/
+
+# User data
+data/
+reports/
