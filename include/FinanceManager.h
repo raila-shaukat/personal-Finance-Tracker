@@ -41,6 +41,7 @@ public:
     void showFinancialSummary();
     void showMonthlyReport();
     void showCategoryReport();
+    void saveReport();
 
     // File Handling
     void saveTransactions();

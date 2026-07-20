@@ -1,120 +1,135 @@
 #include "../include/Report.h"
 
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 #include <map>
 
 using namespace std;
 
-void Report::showFinancialSummary(
-    const vector<Transaction>& transactions)
+void Report::monthlyReport(const vector<Transaction>& transactions)
 {
+    if (transactions.empty())
+    {
+        cout << "\nNo transactions found.\n";
+        return;
+    }
+
+    map<string, double> monthly;
+
+    for (const auto& t : transactions)
+    {
+        string month = t.getDate().substr(0, 7);
+
+        if (t.getType() == "Income")
+            monthly[month] += t.getAmount();
+        else
+            monthly[month] -= t.getAmount();
+    }
+
+    cout << "\n====================================\n";
+    cout << "         MONTHLY REPORT\n";
+    cout << "====================================\n";
+
+    for (const auto& m : monthly)
+    {
+        cout << left << setw(15) << m.first
+             << "Balance : " << m.second << endl;
+    }
+}
+
+void Report::categoryReport(const vector<Transaction>& transactions)
+{
+    if (transactions.empty())
+    {
+        cout << "\nNo transactions found.\n";
+        return;
+    }
+
+    map<string, double> category;
+
+    for (const auto& t : transactions)
+    {
+        if (t.getType() == "Expense")
+            category[t.getCategory()] += t.getAmount();
+    }
+
+    cout << "\n====================================\n";
+    cout << "      CATEGORY EXPENSE REPORT\n";
+    cout << "====================================\n";
+
+    for (const auto& c : category)
+    {
+        cout << left << setw(20)
+             << c.first
+             << c.second << endl;
+    }
+}
+
+void Report::incomeExpenseReport(const vector<Transaction>& transactions)
+{
+    if (transactions.empty())
+    {
+        cout << "\nNo transactions found.\n";
+        return;
+    }
+
     double income = 0;
     double expense = 0;
 
-    for (const auto& transaction : transactions)
+    for (const auto& t : transactions)
     {
-        if (transaction.getType() == "Income")
-        {
-            income += transaction.getAmount();
-        }
+        if (t.getType() == "Income")
+            income += t.getAmount();
         else
-        {
-            expense += transaction.getAmount();
-        }
+            expense += t.getAmount();
     }
 
-    cout << "\n========== Financial Summary ==========\n";
+    cout << "\n====================================\n";
+    cout << "       FINANCIAL SUMMARY\n";
+    cout << "====================================\n";
 
-    cout << fixed << setprecision(2);
-
-    cout << "Total Income   : PKR " << income << endl;
-    cout << "Total Expense  : PKR " << expense << endl;
-    cout << "Current Balance: PKR " << income - expense << endl;
+    cout << "Total Income  : " << income << endl;
+    cout << "Total Expense : " << expense << endl;
+    cout << "Balance       : " << income - expense << endl;
 }
 
-void Report::showMonthlyReport(const vector<Transaction>& transactions)
+void Report::saveReport(const vector<Transaction>& transactions)
 {
-    map<string, double> monthlyIncome;
-    map<string, double> monthlyExpense;
-
-    for (const auto& transaction : transactions)
+    if (transactions.empty())
     {
-        string date = transaction.getDate();
-
-        // Expected format: DD-MM-YYYY
-        string monthYear = date.substr(3);
-
-        if (transaction.getType() == "Income")
-        {
-            monthlyIncome[monthYear] += transaction.getAmount();
-        }
-        else
-        {
-            monthlyExpense[monthYear] += transaction.getAmount();
-        }
-    }
-
-    if (monthlyIncome.empty() && monthlyExpense.empty())
-    {
-        cout << "\nNo Transactions Found!\n";
+        cout << "\nNo transactions found.\n";
         return;
     }
 
-    cout << "\n========== Monthly Report ==========\n";
+    ofstream file("reports/report.txt");
 
-    cout << fixed << setprecision(2);
-
-    for (const auto& month : monthlyIncome)
+    if (!file.is_open())
     {
-        string currentMonth = month.first;
-
-        double income = monthlyIncome[currentMonth];
-        double expense = monthlyExpense[currentMonth];
-
-        cout << "\nMonth: " << currentMonth << endl;
-        cout << "Income : PKR " << income << endl;
-        cout << "Expense: PKR " << expense << endl;
-        cout << "Balance: PKR " << income - expense << endl;
-    }
-
-    // Display months that have expenses only
-    for (const auto& month : monthlyExpense)
-    {
-        if (monthlyIncome.find(month.first) == monthlyIncome.end())
-        {
-            cout << "\nMonth: " << month.first << endl;
-            cout << "Income : PKR 0.00" << endl;
-            cout << "Expense: PKR " << month.second << endl;
-            cout << "Balance: PKR -" << month.second << endl;
-        }
-    }
-}
-
-void Report::showCategoryReport(const vector<Transaction>& transactions)
-{
-    map<string, double> categoryExpenses;
-
-    for (const auto& transaction : transactions)
-    {
-        if (transaction.getType() == "Expense")
-        {
-            categoryExpenses[transaction.getCategory()] += transaction.getAmount();
-        }
-    }
-
-    if (categoryExpenses.empty())
-    {
-        cout << "\nNo Expense Transactions Found!\n";
+        cout << "\nUnable to save report.\n";
         return;
     }
 
-    cout << "\n========== Category Expense Report ==========\n";
+    double income = 0;
+    double expense = 0;
 
-    cout << fixed << setprecision(2);
-
-    for (const auto& category : categoryExpenses)
+    for (const auto& t : transactions)
     {
-        cout << category.first << " : PKR " << category.second << endl;
+        if (t.getType() == "Income")
+            income += t.getAmount();
+        else
+            expense += t.getAmount();
     }
+
+    file << "====================================\n";
+    file << "      PERSONAL FINANCE REPORT\n";
+    file << "====================================\n\n";
+
+    file << "Total Income  : " << income << endl;
+    file << "Total Expense : " << expense << endl;
+    file << "Balance       : " << income - expense << endl;
+
+    file.close();
+
+    cout << "\nReport saved successfully in reports/report.txt\n";
 }

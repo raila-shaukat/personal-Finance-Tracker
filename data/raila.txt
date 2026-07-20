@@ -1,0 +1,5 @@
+3,petrol,12300,Transport,25-7-2026,Expense
+1,Salary,200000,Salary,22-7-2026,Income
+2,Grocery,1500,Food,26-7-2026,Expense
+1,Salary,50000,Salary,20-7-2026,Income
+2,Pizza,2000,Food,20-7-2026,Expense

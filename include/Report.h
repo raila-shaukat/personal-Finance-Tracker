@@ -7,17 +7,13 @@
 class Report
 {
 public:
-    static void showFinancialSummary(
-        const std::vector<Transaction>& transactions
-    );
+    static void monthlyReport(const std::vector<Transaction>& transactions);
 
-    static void showMonthlyReport(
-        const std::vector<Transaction>& transactions
-    );
+    static void categoryReport(const std::vector<Transaction>& transactions);
 
-    static void showCategoryReport(
-        const std::vector<Transaction>& transactions
-    );
+    static void incomeExpenseReport(const std::vector<Transaction>& transactions);
+
+    static void saveReport(const std::vector<Transaction>& transactions);
 };
 
 #endif

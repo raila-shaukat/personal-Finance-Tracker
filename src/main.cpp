@@ -2,6 +2,7 @@
 
 #include "../include/UserManager.h"
 #include "../include/FinanceManager.h"
+#include "../include/InputValidator.h"
 
 using namespace std;
 
@@ -17,9 +18,8 @@ int main()
         cout << "1. Register\n";
         cout << "2. Login\n";
         cout << "3. Exit\n";
-        cout << "Enter Choice: ";
 
-        cin >> choice;
+        choice = InputValidator::getMenuChoice(1, 3);
 
         switch (choice)
         {
@@ -31,7 +31,7 @@ int main()
         {
             string loggedInUser = userManager.loginUser();
 
-            if (loggedInUser != "")
+            if (!loggedInUser.empty())
             {
                 FinanceManager financeManager(loggedInUser);
 
@@ -40,7 +40,7 @@ int main()
                 do
                 {
                     cout << "\n========== Finance Menu ==========\n";
-                    cout << "Logged in as: " << loggedInUser << endl;
+                    cout << "Logged in as: " << loggedInUser << "\n";
 
                     cout << "\n------ Transactions ------\n";
                     cout << "1. Add Income\n";
@@ -61,57 +61,58 @@ int main()
                     cout << "12. Financial Summary\n";
                     cout << "13. Monthly Report\n";
                     cout << "14. Category Expense Report\n";
+                    cout << "15. Save Report\n";
 
-                    cout << "\n15. Logout\n";
+                    cout << "\n16. Logout\n";
 
-                    cout << "\nEnter Choice: ";
-                    cin >> financeChoice;
+                    financeChoice = InputValidator::getMenuChoice(1, 16);
 
                     switch (financeChoice)
                     {
                     case 1:
                         financeManager.addIncome();
                         break;
-                    
+
                     case 2:
                         financeManager.addExpense();
                         break;
-                    
+
                     case 3:
                         financeManager.viewTransactions();
                         break;
-                    
+
                     case 4:
                         financeManager.editTransaction();
                         break;
-                    
+
                     case 5:
                         financeManager.deleteTransaction();
                         break;
-                    
+
                     case 6:
                         financeManager.showBalance();
                         break;
-                    
+
                     case 7:
                         financeManager.addBudget();
                         break;
-                    
+
                     case 8:
                         financeManager.viewBudgets();
                         break;
-                    
+
                     case 9:
                         financeManager.editBudget();
                         break;
-                    
+
                     case 10:
                         financeManager.deleteBudget();
                         break;
-                    
+
                     case 11:
                         financeManager.checkBudgetStatus();
                         break;
+
                     case 12:
                         financeManager.showFinancialSummary();
                         break;
@@ -125,13 +126,15 @@ int main()
                         break;
 
                     case 15:
+                        financeManager.saveReport();
+                        break;
+
+                    case 16:
                         cout << "\nLogged Out Successfully!\n";
                         break;
-                    default:
-                        cout << "\nInvalid Choice!\n";
                     }
-
-                } while (financeChoice != 15);
+                }
+                while (financeChoice != 16);
             }
 
             break;
@@ -140,12 +143,10 @@ int main()
         case 3:
             cout << "\nThank you for using Personal Finance Tracker!\n";
             break;
-
-        default:
-            cout << "\nInvalid Choice!\n";
         }
 
-    } while (choice != 3);
+    }
+    while (choice != 3);
 
     return 0;
 }

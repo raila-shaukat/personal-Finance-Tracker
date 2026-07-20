@@ -6,24 +6,25 @@
             "type": "shell",
             "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
-                "-std=c++17",
+             "-std=c++17",
+             "-g",
 
-                "src/main.cpp",
-                "src/User.cpp",
-                "src/UserManager.cpp",
-                "src/Transaction.cpp",
-                "src/FinanceManager.cpp",
-                "src/FileManager.cpp",
-                "src/InputValidator.cpp",
-                "src/CategoryManager.cpp",
-                "src/Budget.cpp",
-                "src/Report.cpp",
+             "src/main.cpp",
+             "src/User.cpp",
+             "src/UserManager.cpp",
+             "src/Transaction.cpp",
+             "src/FinanceManager.cpp",
+             "src/FileManager.cpp",
+             "src/InputValidator.cpp",
+             "src/CategoryManager.cpp",
+             "src/Budget.cpp",
+             "src/Report.cpp",
 
-                "-Iinclude",
+             "-Iinclude",
 
-                "-o",
-                "FinanceTracker.exe"
-            ],
+             "-o",
+             "FinanceTracker.exe"
+            ],        
             "options": {
                 "cwd": "${workspaceFolder}"
             },

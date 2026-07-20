@@ -12,6 +12,7 @@ double InputValidator::getPositiveAmount()
     while (true)
     {
         cout << "Amount: ";
+
         cin >> amount;
 
         if (cin.fail())
@@ -41,12 +42,16 @@ string InputValidator::getValidTitle()
     while (true)
     {
         cout << "Title: ";
-        getline(cin, title);
 
-        if (!title.empty())
-            return title;
+        getline(cin >> ws, title);
 
-        cout << "Title cannot be empty.\n";
+        if (title.empty())
+        {
+            cout << "Title cannot be empty.\n";
+            continue;
+        }
+
+        return title;
     }
 }
 

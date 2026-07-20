@@ -23,57 +23,17 @@ FinanceManager::FinanceManager(const std::string& username)
 
 void FinanceManager::addIncome()
 {
-    string title = InputValidator::getValidTitle();
-    double amount = InputValidator::getPositiveAmount();
-    string category;
-    string date;
-
     cout << "\n========== Add Income ==========\n";
 
-    cin.ignore();
+    string title = InputValidator::getValidTitle();
 
-    do
-    {
-    cout << "Title: ";
-    getline(cin, title);
+    double amount = InputValidator::getPositiveAmount();
 
-    if (title.empty())
-    {
-        cout << "Title cannot be empty.\n";
-    }
+    string category = CategoryManager::selectCategory();
 
-    } while (title.empty());
-
-    while (true)
-    {
-    cout << "Amount: ";
-
-    cin >> amount;
-
-    if (cin.fail())
-    {
-        cin.clear();
-        cin.ignore(10000, '\n');
-
-        cout << "Invalid input! Please enter a numeric amount.\n";
-        continue;
-    }
-
-    if (amount <= 0)
-    {
-        cout << "Amount must be greater than zero.\n";
-        continue;
-    }
-
-    break;
-    }
-
-    cin.ignore();
-
-    category = CategoryManager::selectCategory();
-
+    string date;
     cout << "Date (DD-MM-YYYY): ";
-    getline(cin, date);
+    getline(cin >> ws, date);
 
     Transaction income(
         nextTransactionId++,
@@ -504,15 +464,24 @@ void FinanceManager::loadTransactions()
 
 void FinanceManager::showFinancialSummary()
 {
-    Report::showFinancialSummary(transactions);
+    Report report;
+    report.incomeExpenseReport(transactions);
 }
 
 void FinanceManager::showMonthlyReport()
 {
-    Report::showMonthlyReport(transactions);
+    Report report;
+    report.monthlyReport(transactions);
 }
 
 void FinanceManager::showCategoryReport()
 {
-    Report::showCategoryReport(transactions);
+    Report report;
+    report.categoryReport(transactions);
+}
+
+void FinanceManager::saveReport()
+{
+    Report report;
+    report.saveReport(transactions);
 }
