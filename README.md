@@ -82,22 +82,27 @@ personal-finance-tracker/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/personal-finance-tracker.git
+git clone https://github.com/raila_shaukat/personal-finance-tracker.git
 ```
 
 ### Compile
 
 ```bash
-g++ -std=c++17 src/*.cpp -Iinclude -o FinanceTracker.exe
+g++ -std=c++17 src/*.cpp -Iinclude -Iexternal/json/single_include -o FinanceTracker.exe
 ```
 
 ### Run
-
 ```bash
 ./FinanceTracker.exe
 ```
 
 ---
+
+## Requirements
+
+- C++17 compatible compiler (GCC/G++)
+- Git
+- Windows / Linux
 
 ## Screenshots
 
