@@ -1,2 +1,0 @@
-1,Salary,60000,Salary,21-07-2026,Income
-2,Pizza,2400,Food,21-07-2026,Expense

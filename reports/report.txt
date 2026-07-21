@@ -1,7 +1,0 @@
-====================================
-      PERSONAL FINANCE REPORT
-====================================
-
-Total Income  : 60000
-Total Expense : 2400
-Balance       : 57600
