@@ -9,7 +9,7 @@
 using namespace std;
 
 // Constructor
-FinanceManager::FinanceManager(const std::string& username)
+FinanceManager::FinanceManager(const string& username)
 {
     currentUser = username;
 
@@ -17,6 +17,12 @@ FinanceManager::FinanceManager(const std::string& username)
     nextBudgetId = 1;
 
     loadTransactions();
+
+    for (const auto& t : transactions)
+    {
+        if (t.getId() >= nextTransactionId)
+            nextTransactionId = t.getId() + 1;
+    }
 }
 
 // -------------------- Add Income --------------------

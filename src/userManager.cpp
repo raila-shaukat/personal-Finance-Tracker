@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "../include/FileManager.h"
+#include<limits>
 using namespace std;
 
 UserManager::UserManager()
@@ -36,6 +37,10 @@ void UserManager::registerUser()
     if (usernameExists(username))
     {
         cout << "Username already exists!\n";
+
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
         return;
     }
 
@@ -45,7 +50,9 @@ void UserManager::registerUser()
     User newUser(username, password);
 
     users.push_back(newUser);
+
     FileManager::saveUsers(users);
+
     cout << "Registration Successful!\n";
 }
 
