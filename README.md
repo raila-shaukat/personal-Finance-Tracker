@@ -1,3 +1,7 @@
+### First Run
+
+On first launch, register a new account before logging in. The application will automatically populate the JSON files as you use the system.
+
 # 💰 Personal Finance Tracker
 
 A console-based Personal Finance Tracker developed in **C++** using **Object-Oriented Programming (OOP)** principles. The application helps users manage their personal finances by recording income and expenses, creating budgets, generating reports, and storing data using file handling.
