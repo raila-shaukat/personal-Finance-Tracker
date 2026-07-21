@@ -3,14 +3,15 @@
 *.o
 *.obj
 
-# Temporary log files
-errors.txt
-output.txt
-buildlog.txt
-
 # Build folders
 build/
 src/build/
 
 # VS Code
 .vscode/
+
+# Ignore runtime data only
+data/*.txt
+
+# Ignore generated reports
+reports/*.txt
