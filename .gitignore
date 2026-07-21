@@ -3,8 +3,10 @@
 *.o
 *.obj
 
-# Logs
-*.txt
+# Temporary log files
+errors.txt
+output.txt
+buildlog.txt
 
 # Build folders
 build/
@@ -12,7 +14,3 @@ src/build/
 
 # VS Code
 .vscode/
-
-# User data
-data/
-reports/
